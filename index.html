@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="siteTitle">Gerações Gráficas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6c757d;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: var(--dark-color);
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+        }
+
+        .hero-section {
+            background-color: var(--light-color);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .portfolio-item {
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .portfolio-item:hover {
+            transform: scale(1.03);
+        }
+
+        .generated-card {
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Loading spinner */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            border-width: 0.3em;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#" id="logoText">
+                <img id="logoImage" src="https://placehold.co/40x40/0d6efd/ffffff?text=LOGO" alt="Logo" class="me-2 rounded" style="height: 40px; display: none;">
+                Gerações Gráficas
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="display-4" id="heroTitle">A IA que Transforma Ideias em Design</h1>
+            <p class="lead" id="heroSubtitle">Crie cartões de visita e identidade visual de forma instantânea com inteligência artificial.</p>
+        </div>
+    </header>
+
+    <section id="generator" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Gere Seu Cartão de Visita com IA</h2>
+            <div class="card p-4 shadow-lg">
+                <div class="mb-3">
+                    <label for="promptInput" class="form-label fw-bold">Descreva o que você precisa (Seja específico!)</label>
+                    <textarea class="form-control" id="promptInput" rows="3" placeholder="Ex: Cartão de visita minimalista para um advogado, com cores azul marinho e branco, ícone de balança e fonte serifada clássica."></textarea>
+                </div>
+                <button class="btn btn-primary btn-lg" id="generateBtn" onclick="handleGeneration()">
+                    Gerar Imagem
+                </button>
+
+                <div id="loadingIndicator" class="text-center mt-3" style="display: none;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p class="mt-2">Aguarde, a IA está desenhando...</p>
+                </div>
+
+                <div id="resultContainer" class="generated-card mt-4 text-center" style="display: none;">
+                    <h5 class="text-primary">Seu Design Gerado</h5>
+                    <img id="generatedImage" src="" alt="Imagem gerada por IA" class="img-fluid rounded shadow" style="max-height: 400px; width: auto;">
+                    <div class="mt-3">
+                        <a id="downloadLink" download="design-ia.png" class="btn btn-success"><i class="fas fa-download me-2"></i> Baixar Imagem</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Nossos Melhores Trabalhos</h2>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card shadow portfolio-item">
+                        <img src="https://placehold.co/600x400/1A1A1A/FFFFFF/png?text=Advocacia+Empresarial" class="card-img-top" alt="Mockup Advocacia">
+                        <div class="card-body">
+                            <h5 class="card-title">Advocacia Empresarial</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow portfolio-item">
+                        <img src="https://placehold.co/600x400/28a745/FFFFFF/png?text=Consultoria+Financeira" class="card-img-top" alt="Mockup Finanças">
+                        <div class="card-body">
+                            <h5 class="card-title">Consultoria Financeira</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow portfolio-item">
+                        <img src="https://placehold.co/600x400/ffc107/343a40/png?text=Culinária+Gourmet" class="card-img-top" alt="Mockup Culinária">
+                        <div class="card-body">
+                            <h5 class="card-title">Culinária Gourmet</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 Gerações Gráficas. Todos os direitos reservados.</p>
+            <p><a href="#loginModal" data-bs-toggle="modal" class="text-info" style="text-decoration: none;">[Acesso Restrito]</a></p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login de Administrador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="loginEmail" value="admin@admin.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Senha</label>
+                            <input type="password" class="form-control" id="loginPassword" value="Euvou*1717">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="handleLogin()">Entrar</button>
+                        <p class="text-danger mt-2" id="loginError" style="display: none;"></p>
+                    </div>
+                    
+                    <div id="adminPanel" style="display: none;">
+                        <h4>Painel de Configurações</h4>
+                        <div class="mb-3">
+                            <label for="settingSiteTitle" class="form-label">Título do Site</label>
+                            <input type="text" class="form-control" id="settingSiteTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingHeroTitle" class="form-label">Título Principal (Hero)</label>
+                            <input type="text" class="form-control" id="settingHeroTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingHeroSubtitle" class="form-label">Subtítulo Principal</label>
+                            <input type="text" class="form-control" id="settingHeroSubtitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingLogoText" class="form-label">Texto do Logo (opcional)</label>
+                            <input type="text" class="form-control" id="settingLogoText">
+                        </div>
+                        <div class="mb-3">
+                            <label for="settingLogoImage" class="form-label">URL da Imagem do Logo (opcional)</label>
+                            <input type="text" class="form-control" id="settingLogoImage">
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="updateSettings()">Salvar Alterações</button>
+                        <button type="button" class="btn btn-secondary" onclick="handleLogout()">Sair</button>
+                        <p class="text-success mt-2" id="updateSuccess" style="display: none;">Configurações salvas!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        
+        // =================================================================
+        // 🔴 IMPORTANTE: Insira suas Chaves do Supabase aqui
+        // Essas chaves são públicas e DEVEM estar aqui para o site funcionar.
+        // =================================================================
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE'; // <-- COLE AQUI
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE'; // <-- COLE AQUI
+        
+        // ❌ A CHAVE HUGGINGFACE FOI REMOVIDA DAQUI POR QUESTÕES DE SEGURANÇA! 
+        // Ela deve estar nas Variáveis de Ambiente do Netlify.
+        // =================================================================
+
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // =================================================================
+        // FUNÇÕES DE CONFIGURAÇÃO (SUPABASE)
+        // =================================================================
+
+        async function loadSettings() {
+            const { data: settings, error } = await supabase
+                .from('settings')
+                .select('*')
+                .eq('id', 1) 
+                .single();
+
+            if (error) {
+                console.error("Erro ao carregar configurações:", error);
+                return;
+            }
+
+            // Aplica as configurações
+            document.getElementById('siteTitle').textContent = settings.site_title || "Gerações Gráficas";
+            document.getElementById('heroTitle').textContent = settings.hero_title || "A IA que Transforma Ideias em Design";
+            document.getElementById('heroSubtitle').textContent = settings.hero_subtitle || "Crie cartões de visita e identidade visual de forma instantânea com inteligência artificial.";
+            
+            // Lógica do Logo
+            const logoTextElement = document.getElementById('logoText');
+            const logoImageElement = document.getElementById('logoImage');
+            
+            if (settings.logo_image_url) {
+                logoImageElement.src = settings.logo_image_url;
+                logoImageElement.style.display = 'inline-block';
+                logoTextElement.textContent = settings.logo_text || "Design IA";
+            } else {
+                logoImageElement.style.display = 'none';
+                logoTextElement.textContent = settings.logo_text || "Gerações Gráficas";
+            }
+
+            // Preenche o painel de admin (se estiver logado)
+            if (supabase.auth.getSession().data.session) {
+                document.getElementById('settingSiteTitle').value = settings.site_title || '';
+                document.getElementById('settingHeroTitle').value = settings.hero_title || '';
+                document.getElementById('settingHeroSubtitle').value = settings.hero_subtitle || '';
+                document.getElementById('settingLogoText').value = settings.logo_text || '';
+                document.getElementById('settingLogoImage').value = settings.logo_image_url || '';
+            }
+        }
+
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+
+            errorElement.style.display = 'none';
+
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                errorElement.textContent = 'Erro de Login: Email ou Senha incorretos.';
+                errorElement.style.display = 'block';
+            } else {
+                checkAuth();
+                loadSettings(); 
+            }
+        }
+
+        async function handleLogout() {
+            await supabase.auth.signOut();
+            checkAuth();
+        }
+
+        async function checkAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            const loginForm = document.getElementById('loginForm');
+            const adminPanel = document.getElementById('adminPanel');
+
+            if (session) {
+                loginForm.style.display = 'none';
+                adminPanel.style.display = 'block';
+            } else {
+                loginForm.style.display = 'block';
+                adminPanel.style.display = 'none';
+            }
+        }
+
+        async function updateSettings() {
+            const newSettings = {
+                site_title: document.getElementById('settingSiteTitle').value,
+                hero_title: document.getElementById('settingHeroTitle').value,
+                hero_subtitle: document.getElementById('settingHeroSubtitle').value,
+                logo_text: document.getElementById('settingLogoText').value,
+                logo_image_url: document.getElementById('settingLogoImage').value,
+            };
+
+            const { error } = await supabase
+                .from('settings')
+                .update(newSettings)
+                .eq('id', 1);
+            
+            const successElement = document.getElementById('updateSuccess');
+
+            if (error) {
+                console.error("Erro ao atualizar:", error);
+                successElement.textContent = "Erro ao salvar! Verifique as permissões RLS.";
+                successElement.className = "text-danger mt-2";
+            } else {
+                successElement.textContent = "Configurações salvas!";
+                successElement.className = "text-success mt-2";
+                loadSettings(); // Recarrega o site com as novas configurações
+            }
+            successElement.style.display = 'block';
+            setTimeout(() => successElement.style.display = 'none', 3000);
+        }
+
+        // =================================================================
+        // FUNÇÕES DE GERAÇÃO DE IMAGEM (AGORA SEGURAS COM NETLIFY FUNCTION)
+        // =================================================================
+
+        // 1. A NOVA FUNÇÃO generateImage CHAMA O ENDPOINT SEGURO DO NETLIFY
+        async function generateImage(prompt) {
+            console.log('Enviando prompt para Função Serverless:', prompt);
+            
+            // Endpoint para a sua função Serverless no Netlify
+            const NETLIFY_FUNCTION_URL = '/.netlify/functions/generate-card';
+
+            const response = await fetch(NETLIFY_FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // Enviamos apenas o PROMPT. A chave é adicionada no servidor.
+                body: JSON.stringify({ prompt: prompt }) 
+            });
+
+            if (!response.ok) {
+                // O erro virá como JSON da sua Função Serverless
+                const errorData = await response.json();
+                throw new Error(`Falha na Geração de Imagem: ${errorData.message || response.statusText}`);
+            }
+
+            // Recebemos a imagem em Base64 da função Netlify
+            const result = await response.json();
+            const imageBase64 = result.image; 
+
+            // Converte a string Base64 em um Blob para o navegador exibir e baixar
+            const binary = atob(imageBase64);
+            const array = [];
+            for (let i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i));
+            }
+            return new Blob([new Uint8Array(array)], { type: 'image/png' });
+        }
+
+
+        // 2. Função que lida com o clique do botão
+        async function handleGeneration() {
+            const prompt = document.getElementById('promptInput').value;
+            const btn = document.getElementById('generateBtn');
+            const loading = document.getElementById('loadingIndicator');
+            const resultContainer = document.getElementById('resultContainer');
+            const generatedImage = document.getElementById('generatedImage');
+            const downloadLink = document.getElementById('downloadLink');
+
+            if (!prompt) {
+                alert("Por favor, digite uma descrição para o seu design.");
+                return;
+            }
+
+            btn.disabled = true;
+            loading.style.display = 'block';
+            resultContainer.style.display = 'none';
+
+            try {
+                // Chama a função segura
+                const imageBlob = await generateImage(prompt);
+                
+                // Cria um URL temporário para o Blob
+                const imageURL = URL.createObjectURL(imageBlob);
+                
+                // Exibe a imagem
+                generatedImage.src = imageURL;
+                downloadLink.href = imageURL;
+                
+                resultContainer.style.display = 'block';
+
+            } catch (error) {
+                console.error("Erro na geração:", error);
+                alert("Erro ao gerar imagem: " + error.message);
+            } finally {
+                btn.disabled = false;
+                loading.style.display = 'none';
+            }
+        }
+
+        // Inicia a aplicação
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            checkAuth();
+        });
+
+    </script>
+</body>
+</html>
